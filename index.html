@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TODO</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Syne:wght@400;600;700&display=swap">
+<body>
+<div class= "header">
+    <div class="search-wrap"></div>
+  <h1>Zoho<span> board </span> </h1>
+  <input type = "text" class="controls" id ="searchInput"placeholder="search">
+  <button class="control"id = "btnShowAdd">+Add Task</button>
+</div>
+<div class="add-form" id="addForm">
+  <input type = "text" id = "newTaskText"placeholder = "Task description">
+  <select id = "newTaskCol">
+    <option value = "todo">TO DO</option>
+    <option value= "ongoing">ONGOING</option>
+    <option value = "completed">COMPLETED</option>
+    <option value="drop">DROP</option>
+  </select>
+  <button class = "btn-save" id="btnSave">Save</button>
+  <button class = "btn-cancel" id="btnCancel">Cancel</button>
+</div>
+<div class="board" id = "board">
+  <div class="column col-todo"id = "col-todo" data-col="todo">
+    <div class="col-header">
+      <div class="col-title-row">
+        <div class="col-dot"></div>
+        <span class = "col-title">TO DO</span>
+        </div>
+      <span class = "col-count" id="cnt-todo">0</span>
+    </div>
+      <div class = "cards-area" id ="cards-todo"></div>
+    </div>
+  
+  
+  <div class = "column col-ongoing" data-col="ongoing"id="col-ongoing">
+    <div class="col-header">
+      <div class="col-title-row">
+        <div class ="col-dot"></div>
+        <span class = "col-title">ONGOING</span>
+      </div>
+        <span class="col-count"id="cnt-ongoing">0</span>
+      </div>
+      <div class="cards-area" id="cards-ongoing"></div>
+    </div>
+   
+    <div class = "column col-completed" data-col="completed"id="col-completed">
+    <div class="col-header">
+      <div class="col-title-row">
+        <div class ="col-dot"></div>
+         <span class = "col-title">COMPLETED</span>
+      </div>
+        <span class="col-count"id="cnt-completed">0</span>
+      </div>
+      <div class="cards-area" id="cards-completed"></div>
+    </div>
+    
+        <div class="column col-drop" data-col="drop" id="col-drop">
+      <div class="col-header">
+        <div class="col-title-row">
+          <div class="col-dot"></div>
+          <span class="col-title">DROP</span>
+        </div>
+        <span class="col-count" id="cnt-drop">0</span>
+      </div>
+      <div class="cards-area" id="cards-drop"></div>
+    </div>
+    <!-- Edit Modal -->
+<div class="modal" id="editModal">
+  <div class="modal-box">
+    <h3>Edit Task</h3>
+    <input type="text" id="editInput" placeholder="Task name..." />
+    <select id="editCol">
+      <option value="todo">Todo</option>
+      <option value="ongoing">Ongoing</option>
+      <option value="completed">Completed</option>
+      <option value="drop">Drop</option>
+    </select>
+    <div class="modal-btns">
+      <button id="btnEditSave">Save</button>
+      <button id="btnEditCancel">Cancel</button>
+    </div>
+  </div>
+</div>
+ 
+<div class = "stats" id="stats"></div>
+</body>
+</html>
+</head>
+   <script src="js/temp.js"></script>
+   <script src="js/storage.js"></script> 
+   <script src="js/application.js"></script>
+   <script src="js/ui.js"></script>
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+   
+</body>
+</html>
