@@ -1,5 +1,4 @@
 // storage.js
-
 function saveTasks() {
 
   localStorage.setItem(
@@ -10,8 +9,7 @@ function saveTasks() {
 
 function loadTasks() {
 
-  const saved =
-    JSON.parse(localStorage.getItem('tasks')) || []
+  const saved = JSON.parse(localStorage.getItem('tasks')) || []
 
   saved.forEach(function(task) {
 

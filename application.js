@@ -1,44 +1,36 @@
-// application.js
+const COLS = ['todo', 'ongoing', 'completed', 'drop']
 
-
-// CONSTANTS
-
-const COLS          = ['todo', 'ongoing', 'completed', 'drop']
-const ITEM_HEIGHT   = 56
+const ITEM_HEIGHT = 56
 const VISIBLE_COUNT = 10
-const BUFFER        = 3
-const MAX_LENGTH    = 200
+const BUFFER = 3
+const MAX_LENGTH = 200
 
-
-// DATA STRUCTURES
 
 let taskMap = {}
 
 let colMap = {
-  todo:      new Set(),
-  ongoing:   new Set(),
+  todo: new Set(),
+  ongoing: new Set(),
   completed: new Set(),
-  drop:      new Set()
+  drop: new Set()
 }
 
 let colArrayCache = {
-  todo:      [],
-  ongoing:   [],
+  todo: [],
+  ongoing: [],
   completed: [],
-  drop:      []
+  drop: []
 }
 
 let scrollState = {
-  todo:      0,
-  ongoing:   0,
+  todo: 0,
+  ongoing: 0,
   completed: 0,
-  drop:      0
+  drop: 0
 }
 
 let editingId = null
 
-
-// ADD TASK
 
 function addTask() {
 
@@ -49,16 +41,17 @@ function addTask() {
   if (text.length > MAX_LENGTH) {
 
     alert('Too long! Max ' + MAX_LENGTH + ' chars.')
+
     return
   }
 
   const col = DOM.newTaskCol.value
 
   const task = {
-    id:        Date.now(),
-    text:      text,
+    id: Date.now(),
+    text: text,
     textLower: text.toLowerCase(),
-    column:    col
+    column: col
   }
 
   taskMap[task.id] = task
@@ -74,12 +67,11 @@ function addTask() {
   saveTasks()
 
   requestAnimationFrame(function() {
+
     renderColumn(col)
   })
 }
 
-
-// DELETE TASK
 
 function deleteTask(id) {
 
@@ -89,26 +81,25 @@ function deleteTask(id) {
 
   const col = task.column
 
-  const idx =
-    colArrayCache[col].indexOf(id)
+  const idx = colArrayCache[col].indexOf(id)
 
   delete taskMap[id]
 
   colMap[col].delete(id)
 
   if (idx !== -1) {
+
     colArrayCache[col].splice(idx, 1)
   }
 
   saveTasks()
 
   requestAnimationFrame(function() {
+
     renderColumn(col)
   })
 }
 
-
-// MOVE TASK
 
 function moveTask(id, newCol) {
 
@@ -120,12 +111,12 @@ function moveTask(id, newCol) {
 
   if (oldCol === newCol) return
 
-  const idx =
-    colArrayCache[oldCol].indexOf(id)
+  const idx = colArrayCache[oldCol].indexOf(id)
 
   colMap[oldCol].delete(id)
 
   if (idx !== -1) {
+
     colArrayCache[oldCol].splice(idx, 1)
   }
 
@@ -138,24 +129,48 @@ function moveTask(id, newCol) {
   saveTasks()
 
   requestAnimationFrame(function() {
+
     renderColumn(oldCol)
+
     renderColumn(newCol)
   })
 }
 
 
-// SAVE EDIT
+function openEditModal(task) {
+
+  editingId = task.id
+
+  DOM.editInput.value = task.text
+
+  DOM.editCol.value = task.column
+
+  DOM.editModal.classList.add('open')
+
+  DOM.editInput.focus()
+}
+
+
+function closeEditModal() {
+
+  DOM.editModal.classList.remove('open')
+
+  DOM.editInput.value = ''
+
+  editingId = null
+}
+
 
 function saveEdit() {
 
-  const newText =
-    DOM.editInput.value.trim()
+  const newText = DOM.editInput.value.trim()
 
   if (!newText) return
 
   if (newText.length > MAX_LENGTH) {
 
     alert('Too long! Max ' + MAX_LENGTH + ' chars.')
+
     return
   }
 
@@ -165,7 +180,8 @@ function saveEdit() {
 
   const oldCol = task.column
 
-  task.text      = newText
+  task.text = newText
+
   task.textLower = newText.toLowerCase()
 
   if (oldCol !== newCol) {
@@ -177,6 +193,7 @@ function saveEdit() {
     saveTasks()
 
     requestAnimationFrame(function() {
+
       renderColumn(oldCol)
     })
   }
